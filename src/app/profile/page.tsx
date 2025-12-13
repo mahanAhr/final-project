@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent, Typography, Avatar, Box } from "@mui/material";
 
 export default function ProfilePage() {
   const { data, isLoading, isError } = useQuery({
@@ -13,18 +14,54 @@ export default function ProfilePage() {
   if (isError) return <p>Eror</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>User Profile</h1>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: "50px",
+      }}
+    >
+      <Card
+        sx={{
+          width: 400,
+          padding: 2,
+          boxShadow: 4,
+          borderRadius: 3,
+        }}
+      >
+        <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+            <Avatar sx={{ width: 80, height: 80, bgcolor: "primary.main" }}>
+              {data.name.firstname[0].toUpperCase()}
+            </Avatar>
+          </Box>
 
-      <p>Name:{data.name.firstname} {data.name.lastname}</p>
-      <p>User Name: {data.username}</p>
-      <p>E-mail:{data.email}</p>
+          <Typography variant="h5" align="center">
+            {data.name.firstname} {data.name.lastname}
+          </Typography>
 
-      <h3>Address:</h3>
-      <p>
-        {data.address.city} — {data.address.street}, {data.address.number}
-      </p>
-    </div>
+          <Typography
+            variant="body1"
+            align="center"
+            color="text.secondary"
+            sx={{ mb: 2 }}
+          >
+            @{data.username}
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>Email:</strong> {data.email}
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>City:</strong> {data.address.city}
+          </Typography>
+
+          <Typography variant="body2">
+            <strong>Street:</strong> {data.address.street}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
-
