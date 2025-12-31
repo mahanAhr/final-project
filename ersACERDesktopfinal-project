@@ -1,0 +1,29 @@
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{0}: checkout: moving from main to main
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{1}: reset: moving to feature/cart-store
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{2}: checkout: moving from main to main
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{3}: reset: moving to feature/cart-store
+[33m95c387c[m HEAD@{4}: checkout: moving from feature/cart-store to main
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{5}: reset: moving to 4451bde
+[33m103da64[m HEAD@{6}: checkout: moving from main to feature/cart-store
+[33m95c387c[m HEAD@{7}: commit: Save current changes before switching branch
+[33maae479f[m HEAD@{8}: checkout: moving from feature/cart-store to main
+[33m103da64[m HEAD@{9}: commit: Update cart page and cart store
+[33m4451bde[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/feature/cart-store[m[33m, [m[1;32mfeature/cart-store[m[33m)[m HEAD@{10}: commit: Add cart and store features
+[33maae479f[m HEAD@{11}: checkout: moving from main to feature/cart-store
+[33maae479f[m HEAD@{12}: commit (merge): Resolve merge and finalize changes
+[33m8db98d3[m HEAD@{13}: checkout: moving from main to main
+[33m8db98d3[m HEAD@{14}: pull origin main: Fast-forward
+[33m81ef9ba[m HEAD@{15}: checkout: moving from feature/recover to main
+[33m73692aa[m[33m ([m[1;31morigin/feature/recover[m[33m, [m[1;32mfeature/recover[m[33m)[m HEAD@{16}: commit: Recover lost changes
+[33m81ef9ba[m HEAD@{17}: checkout: moving from main to feature/recover
+[33m81ef9ba[m HEAD@{18}: checkout: moving from feature/add-products-profile to main
+[33m867fa0a[m[33m ([m[1;31morigin/feature/add-products-profile[m[33m, [m[1;32mfeature/add-products-profile[m[33m)[m HEAD@{19}: commit: Update after merge
+[33m8f3370a[m HEAD@{20}: commit: Add products and profile
+[33m2c9d751[m HEAD@{21}: commit: Added products page, profile page and providers setup
+[33m3d55663[m HEAD@{22}: commit: Add products and profile sections
+[33m81ef9ba[m HEAD@{23}: checkout: moving from main to feature/add-products-profile
+[33m81ef9ba[m HEAD@{24}: Branch: renamed refs/heads/main to refs/heads/main
+[33m81ef9ba[m HEAD@{26}: Branch: renamed refs/heads/main to refs/heads/main
+[33m81ef9ba[m HEAD@{28}: Branch: renamed refs/heads/main to refs/heads/main
+[33m81ef9ba[m HEAD@{30}: Branch: renamed refs/heads/master to refs/heads/main
+[33m81ef9ba[m HEAD@{32}: commit (initial): Initial commit: Hello World project

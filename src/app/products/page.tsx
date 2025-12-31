@@ -92,7 +92,6 @@ export default function ProductsPage() {
         </Grid>
       </Grid>
 
-      {/* Products Grid */}
       <Grid container spacing={3}>
         {filteredProducts.map((product) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
