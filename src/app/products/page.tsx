@@ -18,7 +18,11 @@ import {
   InputLabel,
   Button,
   CardActions,
+  IconButton,
 } from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 type Product = {
   id: number;
@@ -32,7 +36,12 @@ export default function ProductsPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
-  const addToCart = useCartStore((state) => state.addToCart);
+  const {
+    cart,
+    addToCart,
+    increaseQty,
+    decreaseQty,
+  } = useCartStore();
 
   const {
     data = [],
@@ -97,45 +106,91 @@ export default function ProductsPage() {
       </Grid>
 
       <Grid container spacing={3}>
-        {filteredProducts.map((product) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
-            <Card
-              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <CardMedia
-                component="img"
-                height="200"
-                image={product.image}
-                sx={{ objectFit: "contain", p: 2 }}
-              />
+        {filteredProducts.map((product) => {
+          const cartItem = cart.find(
+            (item) => item.id === product.id
+          );
 
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography fontWeight="bold">{product.title}</Typography>
-                <Typography color="primary.main" sx={{ mt: 1 }}>
-                  ${product.price}
-                </Typography>
-              </CardContent>
+          return (
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
+              <Card
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={product.image}
+                  sx={{ objectFit: "contain", p: 2 }}
+                />
 
-              <CardActions sx={{ mt: "auto" }}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={() =>
-                    addToCart({
-                      id: product.id,
-                      title: product.title,
-                      price: product.price,
-                      image: product.image,
-                      category: product.category,
-                    })
-                  }
-                >
-                  Add to cart
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography fontWeight="bold">
+                    {product.title}
+                  </Typography>
+
+                  <Typography color="primary.main" sx={{ mt: 1 }}>
+                    ${product.price}
+                  </Typography>
+                </CardContent>
+
+                <CardActions sx={{ px: 2, pb: 2 }}>
+                  {!cartItem ? (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      onClick={() =>
+                        addToCart({
+                          id: product.id,
+                          title: product.title,
+                          price: product.price,
+                          image: product.image,
+                          category: product.category,
+                        })
+                      }
+                    >
+                      Add to cart
+                    </Button>
+                  ) : (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <IconButton
+                        color="error"
+                        onClick={() =>
+                          decreaseQty(product.id)
+                        }
+                      >
+                        <RemoveIcon />
+                      </IconButton>
+
+                      <Typography fontWeight="bold">
+                        {cartItem.quantity}
+                      </Typography>
+
+                      <IconButton
+                        color="primary"
+                        onClick={() =>
+                          increaseQty(product.id)
+                        }
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                </CardActions>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
