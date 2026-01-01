@@ -99,21 +99,24 @@ export default function ProductsPage() {
       <Grid container spacing={3}>
         {filteredProducts.map((product) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
-            <Card sx={{ height: "100%" }}>
+            <Card
+              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+            >
               <CardMedia
                 component="img"
                 height="200"
                 image={product.image}
                 sx={{ objectFit: "contain", p: 2 }}
               />
-              <CardContent>
-                <Typography fontWeight="bold">{product.title}</Typography>
 
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography fontWeight="bold">{product.title}</Typography>
                 <Typography color="primary.main" sx={{ mt: 1 }}>
                   ${product.price}
                 </Typography>
               </CardContent>
-              <CardActions>
+
+              <CardActions sx={{ mt: "auto" }}>
                 <Button
                   fullWidth
                   variant="contained"

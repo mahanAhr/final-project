@@ -1,4 +1,5 @@
 import Providers from "./providers";
+import Header from "./Header"; 
 
 export const metadata = {
   title: "Final Project",
@@ -15,7 +16,9 @@ export default function RootLayout({
       
       <body>
         <Providers>
+          <Header />
           {children}
+          
         </Providers>
       </body>
     </html>
