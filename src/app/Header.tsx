@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   AppBar,
@@ -25,7 +25,18 @@ import HomeIcon from "@mui/icons-material/Home";
 
 export default function Header() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobileQuery = useMediaQuery(theme.breakpoints.down("md"), { 
+    noSsr: true 
+  });
+  
+  // ⭐ این خط رو اضافه کردم
+  const [isMobile, setIsMobile] = useState(false);
+
+  // ⭐ این useEffect رو اضافه کردم
+  useEffect(() => {
+    setIsMobile(isMobileQuery);
+  }, [isMobileQuery]);
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,7 +51,7 @@ export default function Header() {
             ) : (
               <Button
                 component={Link}
-                href="/products"
+                href="/"
                 startIcon={<HomeIcon />}
                 sx={{ color: "#000", fontWeight: "bold" }}
               >
@@ -83,7 +94,7 @@ export default function Header() {
           <List>
             <ListItemButton
               component={Link}
-              href="/products"
+              href="/"
               onClick={() => setOpen(false)}
             >
               <ListItemIcon>
