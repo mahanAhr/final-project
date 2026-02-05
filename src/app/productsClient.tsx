@@ -31,14 +31,12 @@ type Product = {
   image: string;
 };
 
-// ⭐ اینجا props رو اضافه کردم
 export default function ProductsClient({ products }: { products: Product[] }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
   const { cart, addToCart, increaseQty, decreaseQty } = useCartStore();
 
-  // ⭐ useQuery رو حذف کردم و از products که از props میاد استفاده می‌کنم
   const data = products;
 
   const categories = [

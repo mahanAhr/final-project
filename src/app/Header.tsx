@@ -29,10 +29,8 @@ export default function Header() {
     noSsr: true 
   });
   
-  // ⭐ این خط رو اضافه کردم
   const [isMobile, setIsMobile] = useState(false);
 
-  // ⭐ این useEffect رو اضافه کردم
   useEffect(() => {
     setIsMobile(isMobileQuery);
   }, [isMobileQuery]);
