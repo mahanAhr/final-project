@@ -1,9 +1,28 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  HydrationBoundary,
+  DehydratedState,
+} from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
+import ThemeRegistry from "./ThemeRegistry";
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default function Providers({
+  children,
+  dehydratedState,
+}: {
+  children: ReactNode;
+  dehydratedState?: DehydratedState;
+}) {
   const [queryClient] = useState(() => new QueryClient());
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+
+  return (
+    <ThemeRegistry>
+      <QueryClientProvider client={queryClient}>
+        <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
+      </QueryClientProvider>
+    </ThemeRegistry>
+  );
 }

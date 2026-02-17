@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   AppBar,
@@ -14,6 +14,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Badge,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -23,19 +24,15 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 
+import { useCartStore } from "./store/cartStore";
+
 export default function Header() {
   const theme = useTheme();
-  const isMobileQuery = useMediaQuery(theme.breakpoints.down("md"), { 
-    noSsr: true 
-  });
-  
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isMobileQuery);
-  }, [isMobileQuery]);
-
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = useState(false);
+
+  const { cart } = useCartStore();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -49,7 +46,7 @@ export default function Header() {
             ) : (
               <Button
                 component={Link}
-                href="/"
+                href="/products"
                 startIcon={<HomeIcon />}
                 sx={{ color: "#000", fontWeight: "bold" }}
               >
@@ -75,7 +72,9 @@ export default function Header() {
             {!isMobile && (
               <>
                 <IconButton component={Link} href="/cart">
-                  <ShoppingCartIcon sx={{ color: "#000" }} />
+                  <Badge badgeContent={totalItems} color="error">
+                    <ShoppingCartIcon sx={{ color: "#000" }} />
+                  </Badge>
                 </IconButton>
 
                 <IconButton component={Link} href="/profile">
@@ -92,7 +91,7 @@ export default function Header() {
           <List>
             <ListItemButton
               component={Link}
-              href="/"
+              href="/products"
               onClick={() => setOpen(false)}
             >
               <ListItemIcon>
@@ -107,7 +106,9 @@ export default function Header() {
               onClick={() => setOpen(false)}
             >
               <ListItemIcon>
-                <ShoppingCartIcon />
+                <Badge badgeContent={totalItems} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
               </ListItemIcon>
               <ListItemText primary="Cart" />
             </ListItemButton>

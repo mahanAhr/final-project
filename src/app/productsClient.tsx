@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useCartStore } from "./store/cartStore";
 
 import Grid from "@mui/material/Grid";
@@ -31,27 +32,32 @@ type Product = {
   image: string;
 };
 
-export default function ProductsClient({ products }: { products: Product[] }) {
+async function getProducts(): Promise<Product[]> {
+  const res = await fetch("https://fakestoreapi.com/products");
+  return res.json();
+}
+
+export default function ProductsClient() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
   const { cart, addToCart, increaseQty, decreaseQty } = useCartStore();
 
-  const data = products;
+  const { data = [] } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  });
 
   const categories = [
     "all",
-    ...Array.from(new Set(data.map((product) => product.category))),
+    ...Array.from(new Set(data.map((p) => p.category))),
   ];
 
   const filteredProducts = data.filter((product) => {
-    const matchName = product.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchCategory = category === "all" || product.category === category;
-
-    return matchName && matchCategory;
+    return (
+      product.title.toLowerCase().includes(search.toLowerCase()) &&
+      (category === "all" || product.category === category)
+    );
   });
 
   return (
@@ -90,7 +96,7 @@ export default function ProductsClient({ products }: { products: Product[] }) {
 
       <Grid container spacing={3}>
         {filteredProducts.map((product) => {
-          const cartItem = cart.find((item) => item.id === product.id);
+          const cartItem = cart.find((i) => i.id === product.id);
 
           return (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>

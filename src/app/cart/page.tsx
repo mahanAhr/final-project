@@ -11,7 +11,7 @@ import {
   TableHead,
   TableRow,
   IconButton,
-  Button,
+  TableContainer,
   Paper,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,42 +23,46 @@ export default function CartPage() {
 
   useEffect(() => setMounted(true), []);
 
-  const {
-    cart,
-    increaseQty,
-    decreaseQty,
-    removeFromCart,
-  } = useCartStore();
+  const { cart, increaseQty, decreaseQty, removeFromCart } = useCartStore();
 
   if (!mounted) return null;
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <Box sx={{ p: 4 }}>
-      <Paper elevation={3}>
-        <Table>
+    <Box sx={{ p: { xs: 0.5, sm: 2 } }}>
+      <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+        <Table
+          stickyHeader
+          sx={{
+            minWidth: { xs: 480, sm: 600, md: 700 },
+          }}
+        >
           <TableHead>
-            <TableRow sx={{ backgroundColor: "#9e9e9e" }}>
-              {[
-                "Number",
-                "Title",
-                "Category",
-                "Quantity",
-                "Price",
-                "Total Price",
-                "",
-              ].map((head) => (
-                <TableCell
-                  key={head}
-                  sx={{ color: "#fff", fontWeight: "bold" }}
-                >
-                  {head}
-                </TableCell>
-              ))}
+            <TableRow>
+              {["#", "Title", "Cat", "Qty", "Price", "Total", ""].map(
+                (head, index) => (
+                  <TableCell
+                    key={head}
+                    sx={{
+                      backgroundColor: "#9e9e9e",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      whiteSpace: "nowrap",
+
+                      position: index === 0 ? "sticky" : "static",
+                      left: index === 0 ? 0 : "auto",
+                      zIndex: 3,
+
+                      fontSize: { xs: 11, sm: 14 },
+                      padding: { xs: "4px 6px", sm: "10px 12px" },
+                      minWidth: index === 0 ? 45 : { xs: 75, sm: 110 },
+                    }}
+                  >
+                    {head}
+                  </TableCell>
+                )
+              )}
             </TableRow>
           </TableHead>
 
@@ -67,55 +71,123 @@ export default function CartPage() {
               <TableRow
                 key={item.id}
                 sx={{
-                  backgroundColor:
-                    index % 2 === 0 ? "#f5f5f5" : "#ffffff",
+                  backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#fff",
                 }}
               >
-                <TableCell>{index + 1}</TableCell>
+                
+                <TableCell
+                  sx={{
+                    fontWeight: "bold",
+                    position: "sticky",
+                    left: 0,
+                    backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#fff",
+                    zIndex: 2,
+                    whiteSpace: "nowrap",
+                    fontSize: { xs: 11, sm: 14 },
+                    padding: { xs: "4px 6px", sm: "10px 12px" },
+                  }}
+                >
+                  {index + 1}
+                </TableCell>
 
-                <TableCell sx={{ fontWeight: "bold" }}>
+                <TableCell
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: { xs: 11, sm: 14 },
+                    padding: { xs: "4px 6px", sm: "10px 12px" },
+                  }}
+                >
                   {item.title}
                 </TableCell>
 
-                <TableCell>{item.category}</TableCell>
-
-                <TableCell>
-                  <IconButton
-                    size="small"
-                    sx={{ background: "#f44336", color: "#fff", mr: 1 }}
-                    onClick={() => decreaseQty(item.id)}
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </IconButton>
-
-                  <Typography
-                    component="span"
-                    sx={{ mx: 1, fontWeight: "bold" }}
-                  >
-                    {item.quantity}
-                  </Typography>
-
-                  <IconButton
-                    size="small"
-                    sx={{ background: "#2196f3", color: "#fff", ml: 1 }}
-                    onClick={() => increaseQty(item.id)}
-                  >
-                    <AddIcon fontSize="small" />
-                  </IconButton>
+                <TableCell
+                  sx={{
+                    fontSize: { xs: 11, sm: 14 },
+                    padding: { xs: "4px 6px", sm: "10px 12px" },
+                  }}
+                >
+                  {item.category}
                 </TableCell>
 
-                <TableCell>${item.price.toFixed(2)}</TableCell>
+              
+                <TableCell
+                  sx={{
+                    padding: { xs: "2px 4px", sm: "8px 10px" },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: { xs: 0.5, sm: 1 },
+                    }}
+                  >
+                    <IconButton
+                      size="small"
+                      sx={{
+                        background: "#f44336",
+                        color: "#fff",
+                        padding: { xs: "3px", sm: "6px" },
+                      }}
+                      onClick={() => decreaseQty(item.id)}
+                    >
+                      <RemoveIcon sx={{ fontSize: { xs: 14, sm: 18 } }} />
+                    </IconButton>
 
-                <TableCell>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: { xs: 11, sm: 14 },
+                        minWidth: 20,
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.quantity}
+                    </Typography>
+
+                    <IconButton
+                      size="small"
+                      sx={{
+                        background: "#2196f3",
+                        color: "#fff",
+                        padding: { xs: "3px", sm: "6px" },
+                      }}
+                      onClick={() => increaseQty(item.id)}
+                    >
+                      <AddIcon sx={{ fontSize: { xs: 14, sm: 18 } }} />
+                    </IconButton>
+                  </Box>
+                </TableCell>
+
+                <TableCell
+                  sx={{
+                    fontSize: { xs: 11, sm: 14 },
+                    padding: { xs: "4px 6px", sm: "10px 12px" },
+                  }}
+                >
+                  ${item.price.toFixed(2)}
+                </TableCell>
+
+                <TableCell
+                  sx={{
+                    fontSize: { xs: 11, sm: 14 },
+                    padding: { xs: "4px 6px", sm: "10px 12px" },
+                  }}
+                >
                   ${(item.price * item.quantity).toFixed(2)}
                 </TableCell>
 
-                <TableCell>
+                <TableCell
+                  sx={{
+                    padding: { xs: "2px 4px", sm: "8px 10px" },
+                  }}
+                >
                   <IconButton
                     color="error"
                     onClick={() => removeFromCart(item.id)}
+                    sx={{ padding: { xs: "4px", sm: "8px" } }}
                   >
-                    <DeleteIcon />
+                    <DeleteIcon sx={{ fontSize: { xs: 18, sm: 22 } }} />
                   </IconButton>
                 </TableCell>
               </TableRow>
@@ -132,7 +204,7 @@ export default function CartPage() {
             </TableRow>
           </TableBody>
         </Table>
-      </Paper>
+      </TableContainer>
     </Box>
   );
 }

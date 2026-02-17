@@ -1,10 +1,9 @@
-import productsClient from "./productsClient";
-import { ComponentType } from "react";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import Providers from "./providers";
+import ProductsClient from "./ProductsClient";
 
 async function getProducts() {
-  const res = await fetch("https://fakestoreapi.com/products", {
-    cache: "no-store",
-  });
+  const res = await fetch("https://fakestoreapi.com/products");
 
   if (!res.ok) {
     throw new Error("Failed to fetch products");
@@ -14,11 +13,17 @@ async function getProducts() {
 }
 
 export default async function ProductsPage() {
-  const products = await getProducts();
+  const queryClient = new QueryClient();
 
-  const ProductsClient = productsClient as ComponentType<{
-    products: any;
-  }>;
+  await queryClient.prefetchQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  });
 
-  return <ProductsClient products={products} />;
+  const dehydratedState = dehydrate(queryClient);
+  return (
+    <Providers dehydratedState={dehydratedState}>
+      <ProductsClient />
+    </Providers>
+  );
 }
